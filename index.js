@@ -3,7 +3,10 @@ const cors = require('cors');
 const { db, usersCollection } = require('./firebase');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
 
 // Register
@@ -58,5 +61,7 @@ app.get('/api/users', async (req, res) => {
 
 
 // exports.api = functions.https.onRequest(app);
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+module.exports = app;
