@@ -2,17 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const { db, usersCollection } = require('./firebase');
 
+
 const app = express();
 // app.use(cors({
 //   origin: 'http://localhost:5173',
 //   credentials: true
 // }));
 // app.use(express.json());
-
+dotenv.config();
 
 // Enhanced CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:5173', 'https://hostingdemoji.vercel.app/'], // Add your production domain
+    origin: ['http://localhost:5173', 'https://hostingdemoji.vercel.app/'], 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -21,7 +22,9 @@ const corsOptions = {
   app.use(cors(corsOptions));
   app.options('*', cors(corsOptions)); // Enable preflight for all routes
   app.use(express.json());
-  
+  app.use(UserRoute);
+app.use(ContentRoutes);
+app.use(MessageRouter);
   // Your routes here (register, login, etc.)
   
   module.exports = app;
