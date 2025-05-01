@@ -3,17 +3,32 @@ const cors = require('cors');
 const { db, usersCollection } = require('./firebase');
 
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
-app.use(express.json());
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+//   credentials: true
+// }));
+// app.use(express.json());
 
+
+// Enhanced CORS configuration
+const corsOptions = {
+    origin: ['http://localhost:5173', 'https://hostingdemoji.vercel.app/'], // Add your production domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  };
+  
+  app.use(cors(corsOptions));
+  app.options('*', cors(corsOptions)); // Enable preflight for all routes
+  app.use(express.json());
+  
+  // Your routes here (register, login, etc.)
+  
+  module.exports = app;
 // exports.api = functions.https.onRequest(app);
 // const PORT = process.env.PORT || 5000;
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-module.exports = app;
 
 
 
